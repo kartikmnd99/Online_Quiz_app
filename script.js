@@ -1,13 +1,13 @@
 const questions = [
   {
-    question: "Which language runs in a web browser?",
-    options: ["Java", "C", "Python", "JavaScript"],
-    answer: 3
+    question: "What is the primary color used on GitHub?",
+    options: ["<i class='fas fa-code-branch'></i> Blue", "<i class='fas fa-book'></i> Purple", "<i class='fas fa-paint-brush'></i> Green", "<i class='fas fa-code'></i> Yellow"],
+    answer: 2
   },
   {
-    question: "What does CSS stand for?",
-    options: ["Central Style Sheets", "Cascading Style Sheets", "Cascading Simple Sheets", "Cars SUVs Sailboats"],
-    answer: 1
+    question: "Which of these is NOT a frontend framework?",
+    options: ["<i class='fab fa-react'></i> React", "<i class='fab fa-angular'></i> Angular", "<i class='fab fa-node'></i> Node.js", "<i class='fab fa-vuejs'></i> Vue.js"],
+    answer: 2
   }
 ];
 
@@ -19,24 +19,33 @@ const optionsEl = document.getElementById("options-container");
 const nextBtn = document.getElementById("next-btn");
 const quizBox = document.getElementById("quiz-box");
 const resultBox = document.getElementById("result-box");
-const scoreText = document.getElementById("score-text");
+const currentScoreEl = document.getElementById("current-score");
+const totalQuestionsEl = document.getElementById("total-questions");
+const finalScoreTextEl = document.getElementById("final-score-text");
 
 function loadQuestion() {
   resetState();
+  
   const current = questions[currentIdx];
-  questionEl.innerText = `${currentIdx + 1}. ${current.question}`;
+  // Add fade effect for next question
+  questionEl.classList.add("fade");
+  questionEl.innerHTML = current.question; // changed to innerHTML to support possible tags/br
   
   current.options.forEach((opt, index) => {
     const btn = document.createElement("button");
-    btn.innerText = opt;
+    btn.innerHTML = opt; // changed to innerHTML to render icons
     btn.onclick = () => selectOption(btn, index);
     optionsEl.appendChild(btn);
   });
+  
+  totalQuestionsEl.innerText = questions.length;
 }
 
 function resetState() {
   nextBtn.classList.add("hide");
   optionsEl.innerHTML = "";
+  // Remove fade effect after next question loads
+  setTimeout(() => questionEl.classList.remove("fade"), 400);
 }
 
 function selectOption(selectedBtn, selectedIndex) {
@@ -47,11 +56,16 @@ function selectOption(selectedBtn, selectedIndex) {
 
   if (selectedIndex === correctIndex) {
     selectedBtn.classList.add("correct");
+    selectedBtn.innerHTML += " <i class='fas fa-check-circle'></i>";
     score++;
+    currentScoreEl.innerText = score;
   } else {
     selectedBtn.classList.add("incorrect");
+    selectedBtn.innerHTML += " <i class='fas fa-times-circle'></i>";
     buttons[correctIndex].classList.add("correct");
+    buttons[correctIndex].innerHTML += " <i class='fas fa-check-circle'></i>";
   }
+  
   nextBtn.classList.remove("hide");
 }
 
@@ -62,8 +76,9 @@ nextBtn.addEventListener("click", () => {
   } else {
     quizBox.classList.add("hide");
     resultBox.classList.remove("hide");
-    scoreText.innerText = `You scored ${score} out of ${questions.length}!`;
+    finalScoreTextEl.innerText = `${score} / ${questions.length}`;
   }
 });
 
+// Start the quiz
 loadQuestion();

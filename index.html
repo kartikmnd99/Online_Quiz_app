@@ -3,22 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Online Quiz App</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>The Coding Quiz - Online Trivia</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 <body>
-  <div class="quiz-container">
-    <div id="quiz-box">
-      <h2 id="question">Question Text</h2>
-      <div id="options-container" class="btn-grid"></div>
-      <button id="next-btn" class="hide">Next Question</button>
-    </div>
-    <div id="result-box" class="hide">
-      <h2>Quiz Completed!</h2>
-      <p id="score-text"></p>
-      <button onclick="location.reload()">Restart</button>
+  <div class="wrapper">
+    <div class="quiz-app-container">
+      <header>
+        <h1><i class="fas fa-brain"></i> Quiz App</h1>
+        <p class="score-display">Score: <span id="current-score">0</span> / <span id="total-questions">0</span></p>
+      </header>
+      
+      <main id="quiz-box">
+        <h2 id="question">Loading...</h2>
+        <div id="options-container" class="btn-grid"></div>
+        <button id="next-btn" class="hide main-btn"><i class="fas fa-chevron-right"></i> Next Question</button>
+      </main>
+
+      <section id="result-box" class="hide result-card">
+        <h2><i class="fas fa-check-circle"></i> Quiz Completed!</h2>
+        <div class="final-score-display">
+          <p id="final-score-text">0 / 0</p>
+          <span class="performance-msg">Nice Job!</span>
+        </div>
+        <button onclick="location.reload()" class="main-btn"><i class="fas fa-undo"></i> Restart Quiz</button>
+      </section>
     </div>
   </div>
-  <script src="script.js"></script>
+  <script src="js/script.js"></script>
 </body>
 </html>
